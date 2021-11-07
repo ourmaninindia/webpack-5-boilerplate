@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- require('./../layout/head.ejs')() %>
+<body>
+  <%- require('./../layout/header.ejs')() %>
+  <main id="logout">
+    <div class="container fifty">
+      <div class="row">
+        <div class="box">
+          <div class="alert alert-success" role="alert">
+            You have been successfully logged out.
+          </div>
+          <div class="alert alert-light" role="alert">
+            Accidentally logged out? Click <a href="./users/login">here</a> to login again.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <%- require('./../layout/footer.ejs')() %>
+</body>
+</html>

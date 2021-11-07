@@ -1,0 +1,20 @@
+#header {
+    height: 50px;
+
+    .navbar{
+        padding:0;
+    }
+
+    nav{
+        background: #588bad;
+    }
+    .navbar-brand, 
+    .nav-link {
+        font-family: Libre Franklin, sans-serif;
+        font-weight: 600;
+        color: #fff;
+        &:hover{
+            color: lightgray; 
+        }
+    }
+}

@@ -1,0 +1,27 @@
+#footer {
+    font-family: Libre Franklin, sans-serif;
+
+    nav {
+        padding:0;
+        padding-right: 40px;
+    }
+    
+    span.navbar-brand{
+      font-size: 0.9rem;
+      margin-left: 20px;
+  }
+
+  .fixed-bottom {
+    background-color: #588bad;
+    color: #fff;
+    font-size: 0.9rem
+}
+
+a {
+    font-weight: 300;
+    color: #fff;
+    &:hover{
+        color: lightgray; 
+    }
+}
+}

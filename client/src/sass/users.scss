@@ -1,0 +1,75 @@
+@import "_global";
+
+
+html {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+body {
+  min-height: 100vh;
+  background-color: $white;
+  color: var(--test);
+  background-color:#f4f4f5;
+  color: #343642;
+}
+
+main {
+	margin-top: 30px;
+
+}
+
+.container.fifty{
+	max-width: 500px;
+	box-shadow: 0 2px 5px #958584;
+	border-radius: 10px;
+	margin-top: 50px;
+}
+
+.form-group {
+	margin-top:10px;
+}
+
+.card{
+	border: 0;
+}
+
+.card-header{
+	background-color: white;
+	border:0;
+}
+
+.box {
+	background-color:white;
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: 0.5rem;
+    border: solid 1px #dee2e6;
+}
+
+.btn-link {
+    color: #0d6efd;
+    text-decoration: none; 
+}
+
+.col-form-label{
+	padding:0;
+	font-size: 0.9rem;
+	line-height: 20px;
+	color: $gray-600;
+}
+
+input.form-control {
+	border:0;
+	margin:0;
+	border-bottom: solid 1px #958584;
+	border-radius:0;
+}
+
+.mt-20{
+	margin-top: 20px;
+}
+.mt-30{
+	margin-top: 30px;
+}

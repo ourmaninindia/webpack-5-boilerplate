@@ -1,0 +1,27 @@
+extends layout
+
+block title
+  title TIM - Supplier
+
+block content
+
+  +menu('supplier')    
+
+  main#supplier
+    .container.mw-1200
+      div.subcontainer
+        .flexrow.nowrap.header
+            h2.title-header Supplier
+            .create-button
+              a.create-button(tabindex="0" role="button" href="#create")
+                button.btn.btn-grey( type="button") Create Supplier
+            #id
+            #organisation
+            #city
+            #state
+
+block script
+ 
+  script.
+    var data =!{JSON.stringify(data)}
+ 

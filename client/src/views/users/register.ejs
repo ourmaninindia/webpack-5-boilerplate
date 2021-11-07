@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- require('./../layout/head.ejs')() %>
+<body>
+  <%- require('./../layout/header.ejs')() %>
+
+  <main id="register">
+    <div class="container fifty">
+      <div class="row">
+         <div class="box">
+        <div class="card">
+          <div class="card-header">
+            <h2>Register</h2>
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" method="post" action="http://192.168.0.157:3001/register">
+              <input type="hidden" name="_token" value="6MTVfborPGSFoyTjlhVQz0Tubo8X6HGAEhtQdgzl"/>
+              <div class="form-group">
+                  <label class="col-form-label" for="name">Name</label>
+                  <input class="form-control" id="name" type="name" name="name" value="" maxlength="255" required="required" autofocus="autofocus" autocomplete="name"/>
+              </div>
+              <div class="form-group">                
+                   <label class="col-form-label" for="email">E-mail Address</label>
+                  <input class="form-control" id="email" type="email" name="email" value="" maxlength="255" required="required" autofocus="autofocus" autocomplete="email"/>
+              </div>
+              <div class="form-group">
+                   <label class="col-form-label" for="password">Password</label>
+                  <input class="form-control" id="password" type="password" name="password" maxlength="100" required="required" autocomplete="current-password"/>
+              </div>
+              <div class="form-group">
+                  <label class="col-form-label" for="passwordconf">Password Confirmation</label>
+                  <input class="form-control" id="passwordconf" type="password" name="passwordconf" value="" maxlength="255" required="required" autocomplete="current-password" autofocus="autofocus"/>
+              </div>
+
+              <div class="row form-group mt-30">
+                <div class="col-md-8 offset-md4">
+                    <input class="form-check-input" id="remember" name="iagree" type="checkbox"/>
+                    <label class="form-check-label" for="iagree">I agree to the <a href="/terms-and-conditions">Terms & Conditions</a></label>
+                </div>
+                <div class="col-md-4 offset-md8">
+                  <button class="btn btn-secondary" type="submit">Register</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </main>
+
+  <%- require('./../layout/footer.ejs')() %>
+</body>
+</html>

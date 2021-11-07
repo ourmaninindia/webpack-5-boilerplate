@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+ <%- require('./../layout/head.ejs')() %>
+  <body>
+    <%- require('./../layout/header.ejs')() %>
+<main id="login">
+<div class="container fifty">
+  <div class="row">
+    <div class="box">
+       <div id='response'></div>
+    <div class="card">
+      <div class="card-header"><h2>Login</h2></div>
+      <div class="card-body">
+        <form class="form-horizontal">
+          <input type="hidden" name="_token" value="6MTVfborPGSFoyTjlhVQz0Tubo8X6HGAEhtQdgzl"/>
+          <div class="form-group">
+            <label class="col-md-4 col-form-label text-md-right" for="email">E-mail Address</label>
+              <input class="form-control" id="email" type="text" name="email" value="" maxlength="255" required="required" autofocus="autofocus" autocomplete="email"/>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label text-md-right" for="password">Password</label>
+              <input class="form-control" id="password" type="password" name="password" maxlength="100" required="required" autocomplete="current-password"/>
+          </div>
+          <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" id="remember" name="remember" type="checkbox"/>
+                <label class="form-check-label" for="remember">Remember Me</label>
+            </div>
+          </div>
+          <!--
+          <div class="row">
+            <div class="col">
+              <div id="_g-recaptcha"></div>
+              <div class="g-recaptcha" data-sitekey="6LcDkqsZAAAAAE4B0l1dZW9aiT9GKehlXhQh5IuB" data-size="invisible" data-callback="_submitForm" data-badge="bottomright">
+                <div class="grecaptcha-badge" data-style="bottomright" style="width: 256px; height: 60px; display: block; transition: right 0.3s ease 0s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;">
+                  <div class="grecaptcha-logo">
+                    <iframe title="reCAPTCHA" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcDkqsZAAAAAE4B0l1dZW9aiT9GKehlXhQh5IuB&amp;co=aHR0cHM6Ly9kZW1vLmxhcmF2ZWwtYm9pbGVycGxhdGUuY29tOjQ0Mw..&amp;hl=en&amp;v=vzAt61JclNZYHl6fEWIBqLbe&amp;size=invisible&amp;badge=bottomright&amp;cb=go7dyy17pnwb" width="256" height="60" role="presentation" name="a-cjtzm0wfmzwt" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe>
+                  </div>
+                  <div class="grecaptcha-error"></div>
+                  <textarea class="g-recaptcha-response" id="g-recaptcha-response" name="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea>
+                </div>
+                <iframe style="display: none;"></iframe>
+              </div>
+              <input type="hidden" name="captcha_status" value="true"/>
+            </div>
+          </div>
+        -->
+          <div class="form-group row mb-0">
+              <button id="login" class="btn btn-secondary" type="submit">Login</button>
+            </div>
+          <div class="form-group row mb-0">
+              <a class="btn btn-link" href="/users/reset">Forgot Your Password?</a>
+            </div>
+          </div>
+          <div class="text-center"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</main>
+<%- require('./../layout/footer.ejs')() %>
+  </body>
+</html>

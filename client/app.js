@@ -1,80 +1,209 @@
-const express           = require('express');
-const path              = require('path');
-const expressValidator  = require('express-validator');
-const flash             = require('connect-flash');
-const session           = require('express-session');
-const passport          = require('passport');
-const config            = require('dotenv').config();
+const express = require('express');
+const axios   = require('axios');
+const env     = require('dotenv').config();
 
-// Init App
-const app = express();
+const router  = express.Router();
 
-// Load View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+//let Supplier  = require('../models/supplier');
 
-// Body Parser Middleware
-// parse application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: false }));
-// parse application/json
-app.use(express.json());
+// display suppliers
+router.get('/', async(req, res) => {
 
-// Set Public Folder
-app.use(express.static(path.join(__dirname, 'public')));
+var agents = [];
+var hotels = [];
 
-// Express Session Middleware
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
+  if (process.env.HOST){
 
-// Express Messages Middleware
-app.use(require('connect-flash')());
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
+    axios.post(process.env.HOST+'/db/getRecord',{
+      "fields":["*"],
+      "orders":["Organisation"],
+      "table":"dbo.fn_addressbook(2,'A')"
+    })
+    .then(function (response) {
+      agents = response.data ;
+console.log(agents)
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.render('suppliers', { msg: error, data: [] });
+    })
+    .then(function () {
+      // always executed
+    });
 
-// Express Validator Middleware
-app.use(expressValidator({
-  errorFormatter: function (param, msg, value) {
-    var namespace = param.split('.')
-      , root = namespace.shift()
-      , formParam = root;
 
-    while (namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param: formParam,
-      msg: msg,
-      value: value
-    };
+    axios.post(process.env.HOST+'/db/getRecord',{
+      "fields":["*"],
+      "orders":["Organisation"],
+      "table":"dbo.fn_addressbook(2,'H')"
+    })
+    .then(function (response) {
+      hotels = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.render('suppliers', { msg: error, data: [] });
+    })
+    .then(function () {
+      // always executed
+    });
+
+    res.render('suppliers', { 'hotels': hotels, 'agents': agents });
+
+  } else {
+    res.render('suppliers', { show: 'show', msg: 'Host ip is not on file' });  
   }
-}));
-
-// Passport Config
-require('./middleware/passport')(passport);
-// Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('*', function (req, res, next) {
-  res.locals.user = req.user || null;
-  next();
 });
 
-// Home Route
-app.get('/', function (req, res) {
-  res.render('index', { title: 'Articles',  });
+
+// get a specific supplier
+router.get('/:id', async(req, res) => {
+
+  var data = [];
+  
+  if (process.env.HOST){
+
+    axios.post(process.env.HOST+'/db/getRecord',{
+      "fields":["*"],
+      "orders":["Organisation"],
+      "table":"dbo.fn_addressbook(2,'A')"
+    })
+    .then(function (response) {
+      data = response.data ;
+
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.render('supplier', { msg: error, data: [] });
+    })
+    .then(function () {
+      // always executed
+    });
+
+    res.render('supplier', { 'data': data });
+    console.log(data)
+
+  } else {
+    res.flash('danger','Host ip is not on file');
+    res.render('supplier', { show: 'show', msg: 'Host ip is not on file' });  
+  }
+
+
 });
 
-// Route Files
-let users = require('./routes/users');
-app.use('/users', users);
+// add a supplier
+router.post('/add', ensureAuthenticated, function(req, res){
+  req.checkBody('name','Name is required').notEmpty();
+  req.checkBody('email','Email is required').notEmpty();
+  req.check('email').isEmail;
 
-// Start Server
-app.listen(3000, function () {
-  console.log('Server started on port 3000...');
+  const errors = validationResult(req);
+
+  if(errors){
+    res.render('add_supplier',{
+      title: 'Add Supplier',
+      errors:errors 
+    });
+  } else {
+    let supplier = new Supplier();
+    supplier.name  = req.body.name;
+    supplier.email = req.body.email;
+
+    supplier.save(function(err){
+      if (err) {
+        console.log(err)
+        return;
+      } else {
+        req.flash('success','Supplier added');
+        res.direct('/');
+      }
+    });
+  }
 });
+
+// edit a supplier form
+router.get('/edit/:id', ensureAuthenticated, function(req, res){
+  supplier.findById(req.params.id,function(err,supplier){
+    // if(supplier.author != req.user._id){
+    //  req;flash('danger','Not authorised');
+    //  res.redirect('/');
+    //}
+    res.render('supplier_edit',{
+      title: "Edit Supplier",
+      supplier: supplier
+    });
+  });
+});
+
+// process a new supplier
+router.post('/edit/:id', ensureAuthenticated, function(req, res){
+  let supplier = {};
+  supplier.name = req.body.name;
+  supplier.email = req.body.email;
+
+});
+
+// delete a supplier
+router.delete('/id',function(req, res){
+
+  if (!req.user.id){
+    res.status(500).send();
+  }
+
+  Supplier.findById(req.params.id, function(err,supplier){
+    if(supplier.author != req.user.id){
+      res.status(500).send();
+    } else {
+      Supplier.remove({_id:req.params.id}, function(err){
+        if (err){
+          console.log(err);
+        }
+        res.send('Success');
+      });
+    }
+  });
+});
+
+router.post('/login', async(req, res) => {
+
+  var data = [];
+  
+  if (process.env.HOST){
+
+    axios.post(process.env.HOST+'/db/getRecord',{
+      "fields":["*"],
+      "orders":["Organisation"],
+      "table":"dbo.fn_addressbook(2,'A')"
+    })
+    .then(function (response) {
+      data = response.data ;
+
+    })
+    .catch(function (error) {
+      console.log(error);
+      res.render('login', { msg: error, data: [] });
+    })
+    .then(function () {
+      // always executed
+    });
+
+    res.render('login', { 'data': data });
+    console.log(data)
+
+  } else {
+    res.flash('danger','Host ip is not on file');
+    res.render('login', { show: 'show', msg: 'Host ip is not on file' });  
+  }
+});
+
+
+function ensureAuthenticated(req, res, next){
+  if (req.isAuthenticated()){
+    return next();
+  } else {
+    req.flash('danger',"You are not logged in");
+    res.redirect('/users/login');
+  }
+}
+
+module.exports = router;

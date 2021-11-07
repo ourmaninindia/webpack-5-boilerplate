@@ -1,0 +1,35 @@
+@import "global";
+@import "users";
+
+.card{
+	border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.card-header{
+	border:initial;
+	text-align: center;
+}
+
+.card-header.alert-warning{
+	background-color: $warning;
+}
+
+.card-header.alert-danger{
+	background-color: $danger;
+}
+.card-header.alert-success {
+	background-color: $success;
+}
+
+.card-body{
+	text-align: center;
+}
+
+i {
+	font-size: 2rem;;
+}
+
